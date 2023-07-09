@@ -1,11 +1,15 @@
 import React from "react";
-import "./App.css";
+import { Layout } from "antd";
+
+import Chart from "./components/contents/Chart";
+import SearchBar from "./components/contents/SearchBar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">0</header>
-    </div>
+    <Layout>
+      <SearchBar />
+      <Chart />
+    </Layout>
   );
 }
 
