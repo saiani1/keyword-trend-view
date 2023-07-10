@@ -63,5 +63,6 @@
     "postcss-scss": "^4.0.6",
     "prettier": "^3.0.0",
     "sass": "^1.63.6"
-  }
+  },
+  "proxy": "https://openapi.naver.com/"
 }
