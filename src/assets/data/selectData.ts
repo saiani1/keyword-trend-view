@@ -42,7 +42,7 @@ export const agesData = [
 
 export const genderData = [
   {
-    value: undefined,
+    value: "",
     label: "설정 안 함",
   },
   {
@@ -57,7 +57,7 @@ export const genderData = [
 
 export const deviceData = [
   {
-    value: undefined,
+    value: "",
     label: "설정 안 함",
   },
   {
