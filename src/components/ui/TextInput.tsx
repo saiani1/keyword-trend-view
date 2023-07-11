@@ -1,18 +1,22 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Input, Space } from "antd";
-import { IReqData } from "../../types/types";
+
+import { setRequestData } from "../../store/requestDataSlice";
+import type { RootState } from "../../store/store";
 
 interface IProps {
   label: string;
   placeholder: string;
-  apiData: IReqData;
-  setApiData: React.Dispatch<React.SetStateAction<IReqData>>;
 }
 
-const TextInput = ({ label, placeholder, apiData, setApiData }: IProps) => {
+const TextInput = ({ label, placeholder }: IProps) => {
+  const requestData = useSelector((state: RootState) => state.requestData);
+  const dispatch = useDispatch();
+
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const data = e.currentTarget.value;
-    setApiData({ ...apiData, [placeholder]: data });
+    dispatch(setRequestData({ ...requestData, [placeholder]: data }));
   };
 
   return (

@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import {
   LineChart,
   Line,
@@ -10,11 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { IResData } from "../../types/types";
-
-interface IProps {
-  resData: IResData[];
-}
+import type { RootState } from "../../store/store";
 
 const COLOR_ARR = [
   "#84D8FF",
@@ -26,24 +24,27 @@ const COLOR_ARR = [
 ];
 const AGES = ["10대", "20대", "30대", "40대", "50대", "60대"];
 
-const Chart = ({ resData }: IProps) => {
-  console.log(resData);
+const Chart = () => {
+  const transformResData = useSelector(
+    (state: RootState) => state.transformResData
+  );
+
   return (
-    <div style={{ margin: "50px auto" }}>
-      <ResponsiveContainer minWidth={900} height={400}>
+    <div style={{ margin: "70px auto" }}>
+      <ResponsiveContainer minWidth={1200} height={400}>
         <LineChart
-          data={resData}
+          data={transformResData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid stroke={"#dedede"} strokeWidth={0.5} />
           <XAxis
             dataKey="period"
-            tick={{ fontSize: "0.7rem", fill: "#999" }}
+            tick={{ fontSize: "0.8rem", fill: "#999" }}
             tickLine={{ stroke: "#dedede" }}
             axisLine={{ stroke: "#bbb" }}
           />
           <YAxis
-            tick={{ fontSize: "0.7rem", fill: "#999" }}
+            tick={{ fontSize: "0.8rem", fill: "#999" }}
             tickCount={6}
             tickLine={{ stroke: "#dedede" }}
             axisLine={{ stroke: "#bbb" }}
@@ -53,17 +54,17 @@ const Chart = ({ resData }: IProps) => {
             iconType="rect"
             iconSize={13}
             wrapperStyle={{
-              paddingBottom: "20px",
+              paddingBottom: "30px",
             }}
             verticalAlign="top"
             formatter={(value) => (
-              <span style={{ color: "#999", fontSize: "0.5rem" }}>{value}</span>
+              <span style={{ color: "#aaa", fontSize: "0.7rem" }}>{value}</span>
             )}
           />
           {AGES.map((x: any, i: number) => (
             <Line
               type="monotone"
-              key={x.period}
+              key={AGES[i]}
               dataKey={AGES[i]}
               dot={{ r: 1.5 }}
               fill={COLOR_ARR[i]}

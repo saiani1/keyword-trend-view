@@ -1,26 +1,23 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Select, Space } from "antd";
-import { IReqData } from "../../types/types";
+
+import { setRequestData } from "../../store/requestDataSlice";
+import type { RootState } from "../../store/store";
 
 interface IProps {
   label: string;
   defaultValue: string | undefined | null;
   options: {}[];
   mode: "multiple" | "tags" | undefined;
-  apiData: IReqData;
-  setApiData: React.Dispatch<React.SetStateAction<IReqData>>;
 }
 
-const SelectBox = ({
-  label,
-  defaultValue,
-  options,
-  mode,
-  apiData,
-  setApiData,
-}: IProps) => {
+const SelectBox = ({ label, defaultValue, options, mode }: IProps) => {
+  const requestData = useSelector((state: RootState) => state.requestData);
+  const dispatch = useDispatch();
+
   const selectChangeHandler = (value: string) => {
-    setApiData({ ...apiData, [label]: value });
+    dispatch(setRequestData({ ...requestData, [label]: value }));
   };
 
   return (
@@ -31,6 +28,7 @@ const SelectBox = ({
         defaultValue={defaultValue}
         options={options}
         mode={mode}
+        placeholder="all"
         onChange={selectChangeHandler}
       />
     </Space>
