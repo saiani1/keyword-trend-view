@@ -2,11 +2,11 @@ import React from "react";
 import { DatePicker, Space } from "antd";
 import type { Dayjs } from "dayjs";
 
-import { IData } from "../../types/types";
+import { IReqData } from "../../types/types";
 
 interface IProps {
-  apiData: IData;
-  setApiData: React.Dispatch<React.SetStateAction<IData>>;
+  apiData: IReqData;
+  setApiData: React.Dispatch<React.SetStateAction<IReqData>>;
 }
 
 const { RangePicker } = DatePicker;

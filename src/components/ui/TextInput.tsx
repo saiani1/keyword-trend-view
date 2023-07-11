@@ -1,12 +1,12 @@
 import React from "react";
 import { Input, Space } from "antd";
-import { IData } from "../../types/types";
+import { IReqData } from "../../types/types";
 
 interface IProps {
   label: string;
   placeholder: string;
-  apiData: IData;
-  setApiData: React.Dispatch<React.SetStateAction<IData>>;
+  apiData: IReqData;
+  setApiData: React.Dispatch<React.SetStateAction<IReqData>>;
 }
 
 const TextInput = ({ label, placeholder, apiData, setApiData }: IProps) => {

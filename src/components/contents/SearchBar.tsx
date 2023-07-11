@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Layout, Space } from "antd";
+import toast from "react-hot-toast";
 
 import {
   timeUnitData,
@@ -10,11 +11,17 @@ import {
 import TextInput from "../ui/TextInput";
 import SelectBox from "../ui/SelectBox";
 import DateInput from "../ui/DateInput";
-import { IData } from "../../types/types";
+import { IReqData, IResData } from "../../types/types";
 import { getDataApi } from "../../api/base";
+import { transformData } from "../../util/transformData";
 
-const SearchBar = () => {
-  const [apiData, setApiData] = useState<IData>({
+interface IProps {
+  resData: IResData[];
+  setResData: React.Dispatch<React.SetStateAction<IResData[]>>;
+}
+
+const SearchBar = ({ resData, setResData }: IProps) => {
+  const [apiData, setApiData] = useState<IReqData>({
     startDate: "",
     endDate: "",
     timeUnit: "date",
@@ -27,8 +34,17 @@ const SearchBar = () => {
 
   const submitHandler = () => {
     getDataApi(apiData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        const data = res.data.results[0].data;
+        if (data.length !== 0) {
+          toast.success("조회가 완료되었습니다.");
+          console.log(data);
+          setResData(transformData(apiData.ages, data));
+        } else {
+          toast.success("검색결과가 없습니다.");
+        }
+      })
+      .catch((err) => toast.error(err.response.data.errMsg));
   };
 
   return (

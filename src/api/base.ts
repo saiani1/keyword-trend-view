@@ -1,7 +1,7 @@
 import axios from "axios";
-import { IData } from "../types/types";
+import { IReqData } from "../types/types";
 
-export const getDataApi = async (params: IData) => {
+export const getDataApi = async (params: IReqData) => {
   const res = await axios.post(
     "v1/datalab/shopping/category/keyword/age",
     params,
