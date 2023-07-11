@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/v1/:path*",
-      "destination": "https://openapi.naver.com/v1:/path*"
+      "source": "/v1/datalab/shopping/category/keyword/age",
+      "destination": "https://openapi.naver.com/v1/datalab/shopping/category/keyword/age"
     },
     {
-      "source": "/v1/:path*/",
-      "destination": "https://openapi.naver.com/v1/:path*/"
+      "source": "/v1/datalab/shopping/category/keyword/age/",
+      "destination": "https://openapi.naver.com/v1/datalab/shopping/category/keyword/age/"
     }
   ]
 }
