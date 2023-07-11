@@ -15,30 +15,30 @@ import DateInput from "../ui/DateInput";
 import { transformData } from "../../util/transformData";
 import type { RootState } from "../../store/store";
 import { setTransformResData } from "../../store/transformResDataSlice";
-import { useData } from "../../hooks/useData";
+import { getDataApi } from "../../services/data";
 
 const SearchBar = () => {
-  const { data, error, refetch } = useData();
   const requestData = useSelector((state: RootState) => state.requestData);
   const dispatch = useDispatch();
 
   const submitHandler = () => {
-    refetch();
-    const dataArr = data?.data.results[0].data;
-    console.log(dataArr);
-    if (data) {
-      if (dataArr.legnth !== 0) {
-        toast.success("조회가 완료되었습니다.");
-        dispatch(setTransformResData(transformData(requestData.ages, dataArr)));
-      } else {
-        toast.success("검색결과가 없습니다.");
+    getDataApi(requestData)
+      .then((res) => {
+        const dataArr = res.data.results[0].data;
+        if (dataArr.length !== 0) {
+          toast.success("조회가 완료되었습니다.");
+          dispatch(
+            setTransformResData(transformData(requestData.ages, dataArr))
+          );
+        } else {
+          toast.success("검색결과가 없습니다.");
+          dispatch(setTransformResData([]));
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response.data.errMsg);
         dispatch(setTransformResData([]));
-      }
-    }
-    if (error) {
-      toast.error((error.response?.data as { errMsg: string })?.errMsg);
-      dispatch(setTransformResData([]));
-    }
+      });
   };
 
   return (
