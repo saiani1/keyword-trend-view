@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { IReqData } from "../types/types";
 
 export const getDataApi = async (params: IReqData) => {

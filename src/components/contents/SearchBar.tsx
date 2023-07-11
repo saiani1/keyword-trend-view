@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Layout, Space } from "antd";
 import toast from "react-hot-toast";
@@ -8,7 +7,7 @@ import {
   agesData,
   genderData,
   deviceData,
-} from "../../assets/data/selectData";
+} from "../../assets/data/data";
 import TextInput from "../ui/TextInput";
 import SelectBox from "../ui/SelectBox";
 import DateInput from "../ui/DateInput";
@@ -22,23 +21,33 @@ const SearchBar = () => {
   const dispatch = useDispatch();
 
   const submitHandler = () => {
-    getDataApi(requestData)
-      .then((res) => {
-        const dataArr = res.data.results[0].data;
-        if (dataArr.length !== 0) {
-          toast.success("조회가 완료되었습니다.");
-          dispatch(
-            setTransformResData(transformData(requestData.ages, dataArr))
-          );
-        } else {
-          toast.success("검색결과가 없습니다.");
+    if (
+      requestData.startDate.length === 0 ||
+      requestData.endDate.length === 0 ||
+      requestData.category.length === 0 ||
+      requestData.keyword.length === 0
+    ) {
+      toast.error("시작/종료일자, 카테고리, 키워드를 입력해주세요.");
+      dispatch(setTransformResData([]));
+    } else {
+      getDataApi(requestData)
+        .then((res) => {
+          const dataArr = res.data.results[0].data;
+          if (dataArr.length !== 0) {
+            toast.success("조회가 완료되었습니다.");
+            dispatch(
+              setTransformResData(transformData(requestData.ages, dataArr))
+            );
+          } else {
+            toast.error("검색결과가 없습니다.");
+            dispatch(setTransformResData([]));
+          }
+        })
+        .catch((err) => {
+          toast.error(err.response.data.errMsg);
           dispatch(setTransformResData([]));
-        }
-      })
-      .catch((err) => {
-        toast.error(err.response.data.errMsg);
-        dispatch(setTransformResData([]));
-      });
+        });
+    }
   };
 
   return (

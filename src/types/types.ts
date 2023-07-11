@@ -16,11 +16,5 @@ export interface IResData {
 }
 
 export interface ITransformResData {
-  period: string;
-  10: number | undefined;
-  20: number | undefined;
-  30: number | undefined;
-  40: number | undefined;
-  50: number | undefined;
-  60: number | undefined;
+  [key: string]: string | number | undefined;
 }

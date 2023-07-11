@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 
 import {
@@ -9,20 +8,10 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  ResponsiveContainer,
 } from "recharts";
 
+import { colorArr, agesArr } from "../../assets/data/data";
 import type { RootState } from "../../store/store";
-
-const COLOR_ARR = [
-  "#84D8FF",
-  "#E8559E",
-  "#FFE05B",
-  "#6BE8C5",
-  "#C755FF",
-  "#005148",
-];
-const AGES = ["10대", "20대", "30대", "40대", "50대", "60대"];
 
 const Chart = () => {
   const transformResData = useSelector(
@@ -31,10 +20,12 @@ const Chart = () => {
 
   return (
     <div style={{ margin: "70px auto" }}>
-      <ResponsiveContainer minWidth={1200} height={400}>
+      {transformResData.length !== 0 && (
         <LineChart
           data={transformResData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          width={1200}
+          height={500}
         >
           <CartesianGrid stroke={"#dedede"} strokeWidth={0.5} />
           <XAxis
@@ -42,6 +33,7 @@ const Chart = () => {
             tick={{ fontSize: "0.8rem", fill: "#999" }}
             tickLine={{ stroke: "#dedede" }}
             axisLine={{ stroke: "#bbb" }}
+            padding={{ left: 40, right: 40 }}
           />
           <YAxis
             tick={{ fontSize: "0.8rem", fill: "#999" }}
@@ -61,18 +53,18 @@ const Chart = () => {
               <span style={{ color: "#aaa", fontSize: "0.7rem" }}>{value}</span>
             )}
           />
-          {AGES.map((x: any, i: number) => (
+          {agesArr.map((age: string, i: number) => (
             <Line
               type="monotone"
-              key={AGES[i]}
-              dataKey={AGES[i]}
+              key={age}
+              dataKey={age}
               dot={{ r: 1.5 }}
-              fill={COLOR_ARR[i]}
-              stroke={COLOR_ARR[i]}
+              fill={colorArr[i]}
+              stroke={colorArr[i]}
             />
           ))}
         </LineChart>
-      </ResponsiveContainer>
+      )}
     </div>
   );
 };

@@ -69,3 +69,14 @@ export const deviceData = [
     label: "모바일",
   },
 ];
+
+export const colorArr = [
+  "#84D8FF",
+  "#E8559E",
+  "#FFE05B",
+  "#6BE8C5",
+  "#C755FF",
+  "#005148",
+];
+
+export const agesArr = ["10대", "20대", "30대", "40대", "50대", "60대"];
