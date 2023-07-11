@@ -12,7 +12,6 @@ function App() {
   const transformResData = useSelector(
     (state: RootState) => state.transformResData
   );
-  console.log(transformResData);
 
   return (
     <Layout style={{ marginTop: "100px" }}>
