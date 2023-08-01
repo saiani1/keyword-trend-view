@@ -1,36 +1,20 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { DatePicker, Space } from "antd";
 import type { Dayjs } from "dayjs";
 
-import { setRequestData } from "../../store/requestDataSlice";
-import type { RootState } from "../../store/store";
+import { setDate } from "../../store/requestDataSlice";
 
 const { RangePicker } = DatePicker;
 
 const DateInput = () => {
-  const requestData = useSelector((state: RootState) => state.requestData);
   const dispatch = useDispatch();
 
   const dateChangeHandler = (
     dates: null | (Dayjs | null)[],
     dateStrings: string[]
   ) => {
-    if (dates)
-      dispatch(
-        setRequestData({
-          ...requestData,
-          startDate: dateStrings[0],
-          endDate: dateStrings[1],
-        })
-      );
-    else
-      dispatch(
-        setRequestData({
-          ...requestData,
-          startDate: "",
-          endDate: "",
-        })
-      );
+    if (dates) dispatch(setDate(dateStrings));
+    else dispatch(setDate(["", ""]));
   };
 
   return (

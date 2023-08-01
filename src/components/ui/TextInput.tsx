@@ -1,9 +1,8 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Input, Space } from "antd";
 
-import { setRequestData } from "../../store/requestDataSlice";
-import type { RootState } from "../../store/store";
+import { setCategory, setKeyword } from "../../store/requestDataSlice";
 
 interface IProps {
   label: string;
@@ -11,12 +10,15 @@ interface IProps {
 }
 
 const TextInput = ({ label, placeholder }: IProps) => {
-  const requestData = useSelector((state: RootState) => state.requestData);
   const dispatch = useDispatch();
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const data = e.currentTarget.value;
-    dispatch(setRequestData({ ...requestData, [placeholder]: data }));
+    if (placeholder === "category") {
+      dispatch(setCategory(data));
+    } else {
+      dispatch(setKeyword(data));
+    }
   };
 
   return (

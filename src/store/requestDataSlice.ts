@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IReqData } from "../types/types";
 
 const initialState: IReqData = {
@@ -16,12 +16,39 @@ export const requestDataState = createSlice({
   name: "requestData",
   initialState,
   reducers: {
-    setRequestData: (state, action) => {
-      return { ...state, ...action.payload };
+    setDate: (state, action: PayloadAction<string[]>) => {
+      state.startDate = action.payload[0];
+      state.endDate = action.payload[1];
+    },
+    setTimeUnit: (state, action: PayloadAction<string>) => {
+      state.timeUnit = action.payload;
+    },
+    setCategory: (state, action: PayloadAction<string>) => {
+      state.category = action.payload;
+    },
+    setKeyword: (state, action: PayloadAction<string>) => {
+      state.keyword = action.payload;
+    },
+    setDevice: (state, action: PayloadAction<string>) => {
+      state.device = action.payload;
+    },
+    setGender: (state, action: PayloadAction<string>) => {
+      state.gender = action.payload;
+    },
+    setAges: (state, action: PayloadAction<string[]>) => {
+      state.ages = action.payload;
     },
   },
 });
 
-export const { setRequestData } = requestDataState.actions;
+export const {
+  setDate,
+  setTimeUnit,
+  setCategory,
+  setKeyword,
+  setDevice,
+  setGender,
+  setAges,
+} = requestDataState.actions;
 
 export default requestDataState.reducer;

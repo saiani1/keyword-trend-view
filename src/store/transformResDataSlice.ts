@@ -8,7 +8,7 @@ export const transformResDataState = createSlice({
   initialState,
   reducers: {
     setTransformResData: (state, action) => {
-      return action.payload;
+      return (state = action.payload);
     },
   },
 });

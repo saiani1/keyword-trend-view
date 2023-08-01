@@ -15,11 +15,14 @@ import { transformData } from "../../util/transformData";
 import type { RootState } from "../../store/store";
 import { setTransformResData } from "../../store/transformResDataSlice";
 import { getDataApi } from "../../services/data";
+import SelectMultipleBox from "../ui/SelectMultipleBox";
 
 const SearchBar = () => {
   const requestData = useSelector((state: RootState) => state.requestData);
+  const resData = useSelector((state: RootState) => state.transformResData);
   const dispatch = useDispatch();
 
+  console.log(requestData, resData);
   const submitHandler = () => {
     if (
       requestData.startDate.length === 0 ||
@@ -62,25 +65,17 @@ const SearchBar = () => {
           label="timeUnit"
           defaultValue={timeUnitData[0].label}
           options={timeUnitData}
-          mode={undefined}
         />
-        <SelectBox
-          label="ages"
-          defaultValue={undefined}
-          options={agesData}
-          mode="multiple"
-        />
+        <SelectMultipleBox options={agesData} />
         <SelectBox
           label="gender"
           defaultValue={genderData[0].label}
           options={genderData}
-          mode={undefined}
         />
         <SelectBox
           label="device"
           defaultValue={deviceData[0].label}
           options={deviceData}
-          mode={undefined}
         />
         <Button type="primary" onClick={submitHandler}>
           조회
