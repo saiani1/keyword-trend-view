@@ -5,9 +5,10 @@ import { setAges } from "../../store/requestDataSlice";
 
 interface IProps {
   options: {}[];
+  defaultValue: string[];
 }
 
-const SelectMultipleBox = ({ options }: IProps) => {
+const SelectMultipleBox = ({ options, defaultValue }: IProps) => {
   const dispatch = useDispatch();
   const selectChangeHandler = (value: string[]) => {
     dispatch(setAges(value));
@@ -21,6 +22,7 @@ const SelectMultipleBox = ({ options }: IProps) => {
         options={options}
         mode="multiple"
         placeholder="all"
+        defaultValue={defaultValue}
         onChange={selectChangeHandler}
       />
     </Space>

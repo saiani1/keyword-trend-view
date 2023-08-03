@@ -56,25 +56,33 @@ const SearchBar = () => {
   return (
     <Layout>
       <Space size="large" style={{ margin: "0 auto 20px" }}>
-        <DateInput />
-        <TextInput label="카테고리:" placeholder="category" />
-        <TextInput label="키워드:" placeholder="keyword" />
+        <DateInput defaultValue={requestData} />
+        <TextInput
+          label="카테고리:"
+          placeholder="category"
+          defaultValue={requestData.category}
+        />
+        <TextInput
+          label="키워드:"
+          placeholder="keyword"
+          defaultValue={requestData.keyword}
+        />
       </Space>
       <Space size="large" style={{ margin: "0 auto" }}>
         <SelectBox
           label="timeUnit"
-          defaultValue={timeUnitData[0].label}
+          defaultValue={requestData.timeUnit}
           options={timeUnitData}
         />
-        <SelectMultipleBox options={agesData} />
+        <SelectMultipleBox options={agesData} defaultValue={requestData.ages} />
         <SelectBox
           label="gender"
-          defaultValue={genderData[0].label}
+          defaultValue={requestData.gender}
           options={genderData}
         />
         <SelectBox
           label="device"
-          defaultValue={deviceData[0].label}
+          defaultValue={requestData.device}
           options={deviceData}
         />
         <Button type="primary" onClick={submitHandler}>

@@ -7,9 +7,10 @@ import { setCategory, setKeyword } from "../../store/requestDataSlice";
 interface IProps {
   label: string;
   placeholder: string;
+  defaultValue: string;
 }
 
-const TextInput = ({ label, placeholder }: IProps) => {
+const TextInput = ({ label, placeholder, defaultValue }: IProps) => {
   const dispatch = useDispatch();
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +25,11 @@ const TextInput = ({ label, placeholder }: IProps) => {
   return (
     <Space>
       <label>{label}</label>
-      <Input placeholder={placeholder} onChange={inputChangeHandler} />
+      <Input
+        placeholder={placeholder}
+        onChange={inputChangeHandler}
+        defaultValue={defaultValue}
+      />
     </Space>
   );
 };
