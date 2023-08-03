@@ -11,18 +11,17 @@ import {
 import TextInput from "../ui/TextInput";
 import SelectBox from "../ui/SelectBox";
 import DateInput from "../ui/DateInput";
+import SelectMultipleBox from "../ui/SelectMultipleBox";
 import { transformData } from "../../util/transformData";
 import type { RootState } from "../../store/store";
 import { setTransformResData } from "../../store/transformResDataSlice";
-import { getDataApi } from "../../services/data";
-import SelectMultipleBox from "../ui/SelectMultipleBox";
+import { useData } from "../../hooks/useData";
 
 const SearchBar = () => {
-  const requestData = useSelector((state: RootState) => state.requestData);
-  const resData = useSelector((state: RootState) => state.transformResData);
+  const getData = useData();
   const dispatch = useDispatch();
+  const requestData = useSelector((state: RootState) => state.requestData);
 
-  console.log(requestData, resData);
   const submitHandler = () => {
     if (
       requestData.startDate.length === 0 ||
@@ -32,25 +31,26 @@ const SearchBar = () => {
     ) {
       toast.error("시작/종료일자, 카테고리, 키워드를 입력해주세요.");
       dispatch(setTransformResData([]));
-    } else {
-      getDataApi(requestData)
-        .then((res) => {
-          const dataArr = res.data.results[0].data;
-          if (dataArr.length !== 0) {
-            toast.success("조회가 완료되었습니다.");
-            dispatch(
-              setTransformResData(transformData(requestData.ages, dataArr))
-            );
-          } else {
-            toast.error("검색결과가 없습니다.");
-            dispatch(setTransformResData([]));
-          }
-        })
-        .catch((err) => {
-          toast.error(err.response.data.errMsg);
-          dispatch(setTransformResData([]));
-        });
+      return;
     }
+    getData.mutate(requestData, {
+      onSuccess: (data) => {
+        const dataArr = data?.data.results[0].data;
+        if (dataArr.length !== 0) {
+          toast.success("조회가 완료되었습니다.");
+          dispatch(
+            setTransformResData(transformData(requestData.ages, dataArr))
+          );
+        } else {
+          toast.error("검색결과가 없습니다.");
+          dispatch(setTransformResData([]));
+        }
+      },
+      onError: (err: any) => {
+        toast.error(err.response.data.errMsg);
+        dispatch(setTransformResData([]));
+      },
+    });
   };
 
   return (

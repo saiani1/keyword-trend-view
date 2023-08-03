@@ -9,7 +9,7 @@ import {
 
 interface IProps {
   label: string;
-  defaultValue: string | undefined | null;
+  defaultValue: string;
   options: {}[];
 }
 
@@ -29,7 +29,6 @@ const SelectBox = ({ label, defaultValue, options }: IProps) => {
         style={{ minWidth: "100px" }}
         defaultValue={defaultValue}
         options={options}
-        mode="tags"
         onChange={selectChangeHandler}
       />
     </Space>
